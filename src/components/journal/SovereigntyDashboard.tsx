@@ -9,7 +9,7 @@ function ultimasMetricas(): MetricasRef {
 
 export function SovereigntyDashboard() {
   const m = ultimasMetricas();
-  const ultimo = JOURNAL[0];
+  const ultimaFecha = JOURNAL[0]?.fecha ?? new Date().toISOString().slice(0, 10);
   const pctLibro = Math.min(100, Math.round(((m.capsLibro ?? 0) / META_LIBRO) * 100));
   const items = [
     { label: "Racha gym", value: `${m.rachaGym ?? 0}`, unit: "días", pct: Math.min(100, ((m.rachaGym ?? 0) / 30) * 100) },
@@ -21,7 +21,7 @@ export function SovereigntyDashboard() {
     <section className="glass neon-edge mt-12 rounded-2xl p-6 md:p-8">
       <div className="flex flex-wrap items-baseline justify-between gap-2">
         <h2 className="font-serif text-2xl italic">Centro de Soberanía</h2>
-        <p className="text-xs text-muted-foreground">Actualizado: <span className="capitalize">{formatFecha(ultimo.fecha)}</span></p>
+        <p className="text-xs text-muted-foreground">Actualizado: <span className="capitalize">{formatFecha(ultimaFecha)}</span></p>
       </div>
       <div className="mt-6 grid grid-cols-2 gap-4 md:grid-cols-4">
         {items.map((it) => (
