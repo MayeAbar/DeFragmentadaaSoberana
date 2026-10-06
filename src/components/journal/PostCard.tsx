@@ -1,7 +1,9 @@
 import { colorDe, formatFecha, type Post } from "@/data/journal";
+import { useCreatorMode } from "@/lib/admin";
 import { TikTokButton } from "./TikTokButton";
 
 export function PostCard({ post, onOpen, index }: { post: Post; onOpen: () => void; index: number }) {
+  const creator = useCreatorMode();
   return (
     <article
       onClick={onOpen}
@@ -16,7 +18,7 @@ export function PostCard({ post, onOpen, index }: { post: Post; onOpen: () => vo
       <p className="mt-3 line-clamp-3 text-sm leading-7 text-muted-foreground">{post.contenido}</p>
       <div className="mt-auto flex items-center justify-between gap-3 pt-6">
         <span className="text-xs text-muted-foreground">Leer entrada →</span>
-        <TikTokButton post={post} />
+        {creator && <TikTokButton post={post} />}
       </div>
     </article>
   );

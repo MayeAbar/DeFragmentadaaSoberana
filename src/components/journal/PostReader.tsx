@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { colorDe, formatFecha, type Post } from "@/data/journal";
+import { useCreatorMode } from "@/lib/admin";
 import { TikTokButton } from "./TikTokButton";
 
 export function PostReader({ post, onClose }: { post: Post; onClose: () => void }) {
+  const creator = useCreatorMode();
   const [guion, setGuion] = useState<string | null>(null);
   useEffect(() => {
     const k = (e: KeyboardEvent) => e.key === "Escape" && onClose();
@@ -24,13 +26,17 @@ export function PostReader({ post, onClose }: { post: Post; onClose: () => void 
         <time className="mt-6 block text-xs capitalize text-muted-foreground">{formatFecha(post.fecha)}</time>
         <h2 className="mt-2 font-serif text-4xl italic leading-tight md:text-5xl">{post.titulo}</h2>
         <p className="diary-lines mt-8 text-[17px] leading-8">{post.contenido}</p>
-        <div className="mt-8"><TikTokButton post={post} onScript={setGuion} /></div>
-        {guion && <pre className="mt-5 whitespace-pre-wrap rounded-xl border bg-muted/60 p-5 font-sans text-sm leading-relaxed">{guion}</pre>}
-        <div className="mt-8 rounded-xl border border-dashed p-5 text-center text-xs text-muted-foreground">
-          {post.tiktokUrl ? (
-            <iframe src={post.tiktokUrl} className="mx-auto h-[575px] w-full max-w-[325px]" allowFullScreen title="TikTok" />
-          ) : "Espacio reservado para tu video de TikTok"}
-        </div>
+        {creator && (
+          <>
+            <div className="mt-8"><TikTokButton post={post} onScript={setGuion} /></div>
+            {guion && <pre className="mt-5 whitespace-pre-wrap rounded-xl border bg-muted/60 p-5 font-sans text-sm leading-relaxed">{guion}</pre>}
+            <div className="mt-8 rounded-xl border border-dashed p-5 text-center text-xs text-muted-foreground">
+              {post.tiktokUrl ? (
+                <iframe src={post.tiktokUrl} className="mx-auto h-[575px] w-full max-w-[325px]" allowFullScreen title="TikTok" />
+              ) : "Espacio reservado para tu video de TikTok"}
+            </div>
+          </>
+        )}
       </article>
     </div>
   );
