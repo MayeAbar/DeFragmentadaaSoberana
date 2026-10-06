@@ -9,6 +9,7 @@ export type Post = {
   categoria: Categoria;
   contenido: string;
   tiktokUrl?: string;
+  guion?: string; // guion TikTok escrito a mano; si existe se copia tal cual
   metricasRef?: MetricasRef;
 };
 
@@ -28,6 +29,23 @@ export const formatFecha = (iso: string) =>
 
 // Ordenados del más reciente al más antiguo
 export const JOURNAL: Post[] = [
+  {
+    id: "2026-10-05-sindrome-del-casi",
+    fecha: "2026-10-05",
+    categoria: "Mujer",
+    titulo: "El 'Síndrome del Casi': La distancia entre fragmentación y soberanía",
+    contenido: "Primer día de periodo, 40 años y las hormonas disparadas. Ganas de llorar y salir corriendo. ¿Por qué? Porque tengo las herramientas y aún así siento que no doy pie con bola. Hoy, escribiendo, me di cuenta de que padezco el 'Síndrome del Casi'. Me falta un 'casi' para el porcentaje de grasa ideal, un 'casi' para que los músculos se marquen, un 'casi' para ser rentable en trading de binarias (sí, binarias, donde busco demostrar que con estrategia innegociable se puede ganar a largo plazo). Ropa en maletas esperando fotos para venderse, una agencia digital andando pero sin solidificarse, y una relación de tres años donde desde el día uno me siento en la cuerda floja. Ganas de comerme el mundo sin la solidez financiera para hacerlo. 'Casi' no es Soy. 'Casi' no es Ser. Sigue sabiendo a fragmentación. Hoy me reconozco la valentía de escribirlo con el corazón acelerado por la ansiedad, sintiéndome perdedora pero con la convicción inquebrantable de que esto es solo aprendizaje y evolución.",
+    guion: `[GANCHO 0-3 SEG]
+Tengo 40 años y hoy me di cuenta de que sufro del "Síndrome del Casi". Casi tengo el cuerpo que de verdad quiero, casi soy rentable en el trading, casi solidifico mi agencia digital... pero "casi" no es SOY. "Casi" no es SER.
+
+[DESARROLLO PRÁCTICO]
+Hoy es el primer día de mi periodo, tengo las hormonas al límite, ganas de llorar y de salir corriendo. Te lo cuento así, de frente, porque me cansé de las vidas perfectas de internet. Sentía que teniendo las habilidades y las herramientas, no daba pie con bola.
+
+Al sentarme a escribir en mi diario digital, descubrí esta verdad incómoda: el "casi" sigue teniendo ese sabor amargo a fragmentación, no a soberanía. Tengo bolsas de ropa guardadas esperando ser vendidas, una agencia andando pero sin explotar, y una relación de tres años donde desde el día uno me he sentido en la cuerda floja. Es una mierda sentir que te quieres comer el mundo pero no tienes la solidez financiera para respaldarlo.
+
+[LLAMADO A LA ACCIÓN]
+Escribo esto con el corazón acelerado por la ansiedad y con una fuerte sensación corporal de ir perdiendo, pero también con una convicción inquebrantable: esto es solo aprendizaje y evolución. Reconocer de frente dónde estás rota es el primer paso para reconstruirte. Si tú también estás atrapada en el "casi", sígueme. Vamos a reclamar nuestra soberanía, página a página.`,
+  },
   { id: "6", fecha: "2026-10-05", categoria: "Soberana Digital", titulo: "Lancé otra web con Lovable en una tarde", contenido: "En Abar Digital entregamos hoy una web completa para una clienta, construida en horas con Lovable. Y en la noche, avancé dos capítulos del libro en edición. Ser soberana digital es crear con tus propias manos.", metricasRef: { capsLibro: 9, rachaGym: 14, grasa: "24%", trading: "+3,2% semanal" } },
   { id: "5", fecha: "2026-10-04", categoria: "Mujer", titulo: "Dejé de pedir permiso para brillar", contenido: "Durante años me hice pequeña para no incomodar. Hoy me miré al espejo y me dije: mereces ocupar espacio. La autoestima no es arrogancia, es dejar de abandonarte a ti misma." },
   { id: "4", fecha: "2026-10-03", categoria: "Maternidad", titulo: "Ropa sucia, risas limpias", contenido: "La casa era un desastre: juguetes, platos, una montaña de ropa. Y aun así, mi hijo me pidió bailar en la cocina. Bailamos. El orden puede esperar; estos momentos no vuelven." },
