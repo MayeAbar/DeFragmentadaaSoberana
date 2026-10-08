@@ -23,6 +23,16 @@ describe("Reglas del diario y Centro de Soberanía", () => {
     expect(fragmentosLibro(posts)).toEqual([fragmento]);
   });
 
+  it("muestra el prólogo de prueba solo en la pestaña El Libro", () => {
+    const prologo = JOURNAL.find((p) => p.id === "2026-10-08-prologo");
+    expect(prologo?.esFragmentoLibro).toBe(true);
+    expect(prologo?.fecha).toBe("2026-10-08");
+    expect(prologo?.titulo).toBe("Prólogo: El día que decidí dejar de estar fragmentada");
+    expect(fragmentosLibro()).toContainEqual(prologo);
+    expect(entradasDiario("Todas")).not.toContainEqual(prologo);
+    expect(entradasDiario("Mentalidad y Espiritualidad")).not.toContainEqual(prologo);
+  });
+
   it("ordena las reflexiones de más reciente a más antigua", () => {
     const reciente = { ...normal, id: "reciente", fecha: "2026-10-04" };
     expect(entradasDiario("Todas", [normal, reciente]).map((p) => p.id)).toEqual(["reciente", "diario"]);

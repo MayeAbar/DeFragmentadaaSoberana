@@ -11,10 +11,13 @@ export function PostCard({ post, onOpen, index }: { post: Post; onOpen: () => vo
       className={`card-enter group flex ${post.esFragmentoLibro ? "book-excerpt" : "glass"} cursor-pointer flex-col rounded-2xl p-6 transition hover:-translate-y-1`}
     >
       <div className="flex items-center justify-between gap-2">
-        <span className={`${colorDe(post.categoria)} rounded-full px-3 py-1 text-xs font-medium`}>{post.categoria}</span>
+        {post.esFragmentoLibro ? (
+          <span className="rounded-full border border-accent/50 px-3 py-1 font-serif text-xs italic text-accent">Fragmento del Libro</span>
+        ) : (
+          <span className={`${colorDe(post.categoria)} rounded-full px-3 py-1 text-xs font-medium`}>{post.categoria}</span>
+        )}
         <time className="text-xs capitalize text-muted-foreground">{formatFecha(post.fecha)}</time>
       </div>
-      {post.esFragmentoLibro && <BookBadge />}
       <h3 className="mt-4 font-serif text-2xl italic leading-snug group-hover:text-accent">{post.titulo}</h3>
       <p className="mt-3 line-clamp-3 text-sm leading-7 text-muted-foreground">{post.contenido}</p>
       <div className="mt-auto flex items-center justify-between gap-3 pt-6">

@@ -20,11 +20,13 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
+type Pestana = Categoria | "Todas" | "El Libro";
+
 function Index() {
-  const [active, setActive] = useState<Categoria | "Todas">("Todas");
+  const [active, setActive] = useState<Pestana>("Todas");
   const [open, setOpen] = useState<Post | null>(null);
-  const list = entradasDiario(active);
-  const libro = fragmentosLibro();
+  const list = active === "El Libro" ? fragmentosLibro() : entradasDiario(active);
+  const esLibro = active === "El Libro";
 
   return (
     <main className="mx-auto max-w-5xl px-5 py-14">
@@ -48,24 +50,24 @@ function Index() {
             {c}
            </Button>
         ))}
+        <button
+          type="button"
+          aria-pressed={esLibro}
+          onClick={() => setActive("El Libro")}
+          className={`whitespace-nowrap rounded-full border border-accent/50 px-4 py-2 font-serif text-sm italic transition-all duration-300 ${esLibro ? "bg-accent/15 text-accent" : "text-accent/80 hover:border-accent hover:bg-accent/10 hover:text-accent"}`}
+        >
+          El Libro
+        </button>
       </nav>
       <p key={active} className="card-enter mt-4 min-h-7 text-center font-serif text-lg italic text-muted-foreground">
-        {CATEGORIAS.find((c) => c.id === active)?.desc ?? "Todas las páginas de mi diario"}
+        {esLibro
+          ? "Fragmentos del libro: De Fragmentada a Soberana"
+          : CATEGORIAS.find((c) => c.id === active)?.desc ?? "Todas las páginas de mi diario"}
       </p>
 
       <section key={`grid-${active}`} className="mt-8 grid gap-6 md:grid-cols-2">
         {list.map((p, i) => <PostCard key={p.id} post={p} index={i} onOpen={() => setOpen(p)} />)}
       </section>
-
-      {libro.length > 0 && (
-        <section aria-labelledby="el-libro" className="mt-20 border-t pt-10">
-          <h2 id="el-libro" className="font-serif text-4xl italic">El Libro</h2>
-          <p className="mt-2 font-serif text-lg text-muted-foreground">De Fragmentada a Soberana</p>
-          <div className="mt-8 grid gap-6 md:grid-cols-2">
-            {libro.map((p, i) => <PostCard key={p.id} post={p} index={i} onOpen={() => setOpen(p)} />)}
-          </div>
-        </section>
-      )}
 
       <footer className="mt-20 text-center font-serif italic text-muted-foreground">Escrito con el alma · Abar Digital</footer>
       {open && <PostReader post={open} onClose={() => setOpen(null)} />}
