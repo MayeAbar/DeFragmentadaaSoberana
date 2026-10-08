@@ -30,6 +30,14 @@ export const formatFecha = (iso: string) =>
 // Ordenados del más reciente al más antiguo
 export const JOURNAL: Post[] = [
   {
+    id: "2026-10-08-prologo",
+    fecha: "2026-10-08",
+    categoria: "Mentalidad y Espiritualidad",
+    esFragmentoLibro: true,
+    titulo: "Prólogo: El día que decidí dejar de estar fragmentada",
+    contenido: "Texto de marcador de posición para el prólogo del libro. Aquí irá el relato del día en que entendí que vivir a medias ya no era una opción, y que la soberanía se construye página a página.",
+  },
+  {
     id: "2026-10-05-sindrome-del-casi",
     fecha: "2026-10-05",
     categoria: "Mentalidad y Espiritualidad",
