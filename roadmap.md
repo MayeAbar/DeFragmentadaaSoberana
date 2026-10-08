@@ -1,6 +1,6 @@
-# Correcciones del diario
+# Plataforma editorial de comunidad
 
-- [x] Devolver Síndrome del Casi al diseño estándar y conservar su categoría.
-- [x] Mostrar solo Soberanía Financiera y Soberanía del Cuerpo en el panel.
-- [x] Separar los fragmentos del libro de Todas y de las cinco categorías.
-- [x] Verificar reglas, filtros y privacidad de las herramientas de creadora.
+- [ ] Navegación fija y páginas Diario, Acerca de Mí, El Libro y Hablemos.
+- [ ] Favoritos guardados en el navegador y vista exclusiva.
+- [ ] Buzón y suscripción a Notas de Voz Soberanas.
+- [ ] Videos TikTok públicos, guiones privados y verificación.
