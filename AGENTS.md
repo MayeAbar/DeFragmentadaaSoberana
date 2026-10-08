@@ -8,3 +8,7 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+## Journal architecture
+- Keep diary filtering, book separation, chronological ordering and latest public metrics in the shared journal selectors so cards and summaries use the same classification rules.
+- Render book excerpts only in the independent book section, never in the diary category feed, to keep daily reflections homogeneous.
