@@ -4,7 +4,7 @@ import { useState, type ReactNode } from 'react';
 import { Button } from '@/components/ui/button';
 import { useFavorites } from '@/lib/favorites';
 import { Newsletter } from './Newsletter';
-const links = [{ to: '/', label: 'Home' }, { to: '/acerca-de-mi', label: 'Acerca de Mí' }, { to: '/el-libro', label: 'El Libro' }, { to: '/hablemos', label: 'Hablemos' }] as const;
+const links = [{ to: '/', label: 'Home' }, { to: '/acerca-de-mi', label: 'Acerca de Mí' }, { to: '/el-libro', label: 'El Libro' }, { to: '/hablemos', label: 'Buzón de Soberanía' }] as const;
 export function SiteShell({ children }: { children: ReactNode }) {
   const [menu, setMenu] = useState(false);
   const { ids } = useFavorites();

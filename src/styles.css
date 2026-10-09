@@ -36,20 +36,20 @@
 :root {
   --radius: 0.75rem;
   --background: oklch(0.991 0.006 84.6); /* #FDFBF7 */
-  --foreground: oklch(0.32 0.018 55); /* #3D342E */
+  --foreground: oklch(from #1A1A1A l c h);
   --card: oklch(1 0 0 / 0.55);
-  --card-foreground: oklch(0.32 0.018 55);
-  --primary: oklch(0.32 0.018 55);
+  --card-foreground: var(--foreground);
+  --primary: var(--foreground);
   --primary-foreground: oklch(0.991 0.006 84.6);
   --secondary: oklch(0.89 0.035 70); /* #EAD7C3 */
-  --secondary-foreground: oklch(0.32 0.018 55);
+  --secondary-foreground: var(--foreground);
   --muted: oklch(0.95 0.015 75);
   --muted-foreground: oklch(0.52 0.025 55);
-  --accent: oklch(0.72 0.06 50);
-  --accent-foreground: oklch(0.991 0.006 84.6);
+  --accent: oklch(from #D4AF37 l c h);
+  --accent-foreground: var(--foreground);
   --border: oklch(0.89 0.035 70);
   --input: oklch(0.89 0.035 70);
-  --ring: oklch(0.72 0.06 50);
+  --ring: var(--accent);
   --cat-food: oklch(0.88 0.06 140);
   --cat-sport: oklch(0.86 0.06 40);
   --cat-trading: oklch(0.87 0.05 230);
@@ -82,6 +82,9 @@
 .editorial-input { width: 100%; background: transparent; border-bottom: 1px solid var(--border); padding: 14px 0; color: var(--foreground); font: inherit; border-radius: 0; }
 .editorial-input:focus-visible { outline: none; border-color: var(--foreground); box-shadow: 0 1px 0 var(--foreground); }
 .editorial-input::placeholder { color: var(--muted-foreground); }
+.kintsugi-submit { background: var(--primary); color: var(--accent); box-shadow: var(--editorial-shadow); transition: box-shadow 240ms, filter 240ms; }
+.kintsugi-submit:hover { background: var(--primary); color: var(--accent); filter: brightness(1.15); box-shadow: 0 0 18px -6px color-mix(in oklch, var(--accent) 45%, transparent); }
+.kintsugi-rule { width: 64px; height: 1px; background: var(--accent); }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }

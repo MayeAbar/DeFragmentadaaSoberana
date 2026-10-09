@@ -1,9 +1,14 @@
 import { z } from 'zod';
 export const contactSchema = z.object({
-  name: z.string().trim().min(1, 'Escribe tu nombre.').max(100),
+  name: z.string().trim().max(100),
+  anonymous: z.boolean().default(false),
+  email: z.string().trim().toLowerCase().email('Escribe un email válido.').max(254),
   message: z.string().trim().min(1, 'Escribe tu mensaje.').max(5000),
   public_response: z.enum(['Sí', 'Anónimo', 'No']),
-});
+}).superRefine((data, ctx) => {
+  if (!data.anonymous && !data.name) ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['name'], message: 'Escribe tu nombre o elige enviar de forma anónima.' });
+  if (data.anonymous && data.public_response === 'Sí') ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['public_response'], message: 'Un mensaje anónimo no puede autorizar publicar tu nombre.' });
+}).transform(data => ({ ...data, name: data.anonymous ? 'Anónima' : data.name }));
 export const newsletterSchema = z.object({ email: z.string().trim().toLowerCase().email('Escribe un email válido.').max(254), consent: z.literal(true) });
 export function tiktokEmbedUrl(value?: string): string | null {
   if (!value) return null;

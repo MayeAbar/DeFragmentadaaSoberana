@@ -16,21 +16,27 @@ export type Database = {
     Tables: {
       community_messages: {
         Row: {
+          anonymous: boolean
           created_at: string
+          email: string | null
           id: string
           message: string
           name: string
           public_response: string
         }
         Insert: {
+          anonymous?: boolean
           created_at?: string
+          email?: string | null
           id?: string
           message: string
           name: string
           public_response: string
         }
         Update: {
+          anonymous?: boolean
           created_at?: string
+          email?: string | null
           id?: string
           message?: string
           name?: string
