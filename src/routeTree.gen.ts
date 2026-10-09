@@ -10,33 +10,79 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AcercaDeMiRouteImport } from './routes/acerca-de-mi'
+import { Route as ElLibroRouteImport } from './routes/el-libro'
+import { Route as FavoritosRouteImport } from './routes/favoritos'
+import { Route as HablemosRouteImport } from './routes/hablemos'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AcercaDeMiRoute = AcercaDeMiRouteImport.update({
+  id: '/acerca-de-mi',
+  path: '/acerca-de-mi',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ElLibroRoute = ElLibroRouteImport.update({
+  id: '/el-libro',
+  path: '/el-libro',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FavoritosRoute = FavoritosRouteImport.update({
+  id: '/favoritos',
+  path: '/favoritos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HablemosRoute = HablemosRouteImport.update({
+  id: '/hablemos',
+  path: '/hablemos',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/acerca-de-mi': typeof AcercaDeMiRoute
+  '/el-libro': typeof ElLibroRoute
+  '/favoritos': typeof FavoritosRoute
+  '/hablemos': typeof HablemosRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/acerca-de-mi': typeof AcercaDeMiRoute
+  '/el-libro': typeof ElLibroRoute
+  '/favoritos': typeof FavoritosRoute
+  '/hablemos': typeof HablemosRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/acerca-de-mi': typeof AcercaDeMiRoute
+  '/el-libro': typeof ElLibroRoute
+  '/favoritos': typeof FavoritosRoute
+  '/hablemos': typeof HablemosRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/acerca-de-mi' | '/el-libro' | '/favoritos' | '/hablemos'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/acerca-de-mi' | '/el-libro' | '/favoritos' | '/hablemos'
+  id:
+    | '__root__'
+    | '/'
+    | '/acerca-de-mi'
+    | '/el-libro'
+    | '/favoritos'
+    | '/hablemos'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AcercaDeMiRoute: typeof AcercaDeMiRoute
+  ElLibroRoute: typeof ElLibroRoute
+  FavoritosRoute: typeof FavoritosRoute
+  HablemosRoute: typeof HablemosRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +94,43 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/acerca-de-mi': {
+      id: '/acerca-de-mi'
+      path: '/acerca-de-mi'
+      fullPath: '/acerca-de-mi'
+      preLoaderRoute: typeof AcercaDeMiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/el-libro': {
+      id: '/el-libro'
+      path: '/el-libro'
+      fullPath: '/el-libro'
+      preLoaderRoute: typeof ElLibroRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/favoritos': {
+      id: '/favoritos'
+      path: '/favoritos'
+      fullPath: '/favoritos'
+      preLoaderRoute: typeof FavoritosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hablemos': {
+      id: '/hablemos'
+      path: '/hablemos'
+      fullPath: '/hablemos'
+      preLoaderRoute: typeof HablemosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AcercaDeMiRoute: AcercaDeMiRoute,
+  ElLibroRoute: ElLibroRoute,
+  FavoritosRoute: FavoritosRoute,
+  HablemosRoute: HablemosRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
