@@ -1,0 +1,10 @@
+CREATE TABLE public.community_messages (id uuid PRIMARY KEY DEFAULT gen_random_uuid(), created_at timestamptz NOT NULL DEFAULT now(), name text NOT NULL CHECK (char_length(trim(name)) BETWEEN 1 AND 100), message text NOT NULL CHECK (char_length(trim(message)) BETWEEN 1 AND 5000), public_response text NOT NULL CHECK (public_response IN ('Sí', 'Anónimo', 'No')));
+GRANT INSERT ON public.community_messages TO anon, authenticated;
+GRANT ALL ON public.community_messages TO service_role;
+ALTER TABLE public.community_messages ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Visitors submit messages only" ON public.community_messages FOR INSERT TO anon, authenticated WITH CHECK (true);
+CREATE TABLE public.voice_subscribers (id uuid PRIMARY KEY DEFAULT gen_random_uuid(), created_at timestamptz NOT NULL DEFAULT now(), email text NOT NULL UNIQUE CHECK (char_length(email) BETWEEN 3 AND 254 AND email ~ '^[^[:space:]@]+@[^[:space:]@]+\.[^[:space:]@]+$'), consent boolean NOT NULL DEFAULT true CHECK (consent = true));
+GRANT INSERT ON public.voice_subscribers TO anon, authenticated;
+GRANT ALL ON public.voice_subscribers TO service_role;
+ALTER TABLE public.voice_subscribers ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Visitors subscribe only" ON public.voice_subscribers FOR INSERT TO anon, authenticated WITH CHECK (consent = true);

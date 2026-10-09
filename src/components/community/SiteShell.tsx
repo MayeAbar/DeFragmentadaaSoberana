@@ -1,0 +1,12 @@
+import { Link } from '@tanstack/react-router';
+import { Bookmark, Menu, X } from 'lucide-react';
+import { useState, type ReactNode } from 'react';
+import { Button } from '@/components/ui/button';
+import { useFavorites } from '@/lib/favorites';
+import { Newsletter } from './Newsletter';
+const links = [{ to: '/', label: 'Home' }, { to: '/acerca-de-mi', label: 'Acerca de Mí' }, { to: '/el-libro', label: 'El Libro' }, { to: '/hablemos', label: 'Buzón de Soberanía' }] as const;
+export function SiteShell({ children }: { children: ReactNode }) {
+  const [menu, setMenu] = useState(false);
+  const { ids } = useFavorites();
+  return <><header className="premium-nav fixed inset-x-0 top-0 z-40 border-b border-border"><div className="mx-auto flex h-20 max-w-6xl items-center justify-between gap-4 px-6"><Link to="/" className="font-serif text-xl italic leading-5" onClick={() => setMenu(false)}>De Fragmentada<br/><span className="pl-5">a Soberana</span></Link><nav aria-label="Navegación principal" className="hidden items-center gap-9 md:flex">{links.map(link => <Link key={link.to} to={link.to} activeOptions={{ exact: true }} activeProps={{ className: 'nav-link nav-active' }} inactiveProps={{ className: 'nav-link' }}>{link.label}</Link>)}</nav><div className="flex items-center gap-2"><Button asChild variant="ghost" size="icon"><Link to="/favoritos" aria-label={`Favoritos${ids.length ? ` (${ids.length})` : ''}`} title="Favoritos" onClick={() => setMenu(false)} className="relative"><Bookmark strokeWidth={1.3}/>{ids.length > 0 && <span className="absolute -right-1 -top-1 text-[10px] text-foreground">{ids.length}</span>}</Link></Button><Button variant="ghost" size="icon" className="md:hidden" aria-label={menu ? 'Cerrar menú' : 'Abrir menú'} aria-expanded={menu} aria-controls="mobile-navigation" onClick={() => setMenu(!menu)}>{menu ? <X strokeWidth={1.3}/> : <Menu strokeWidth={1.3}/>}</Button></div></div>{menu && <nav id="mobile-navigation" aria-label="Navegación móvil" className="flex flex-col gap-5 border-t px-6 py-6 md:hidden">{links.map(link => <Link key={link.to} to={link.to} onClick={() => setMenu(false)} className="font-serif text-2xl">{link.label}</Link>)}</nav>}</header><div className="pt-20">{children}</div><footer className="mt-20"><Newsletter/><div className="mx-auto flex max-w-6xl flex-col justify-between gap-4 px-6 py-8 text-xs text-muted-foreground sm:flex-row"><p>María Barros Coronado · De Fragmentada a Soberana</p><p className="font-serif text-base italic">Escrito con el alma · Abar Digital</p></div></footer></>;
+}

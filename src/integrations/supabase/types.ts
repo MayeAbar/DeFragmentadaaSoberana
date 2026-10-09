@@ -14,7 +14,57 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      community_messages: {
+        Row: {
+          anonymous: boolean
+          created_at: string
+          email: string | null
+          id: string
+          message: string
+          name: string
+          public_response: string
+        }
+        Insert: {
+          anonymous?: boolean
+          created_at?: string
+          email?: string | null
+          id?: string
+          message: string
+          name: string
+          public_response: string
+        }
+        Update: {
+          anonymous?: boolean
+          created_at?: string
+          email?: string | null
+          id?: string
+          message?: string
+          name?: string
+          public_response?: string
+        }
+        Relationships: []
+      }
+      voice_subscribers: {
+        Row: {
+          consent: boolean
+          created_at: string
+          email: string
+          id: string
+        }
+        Insert: {
+          consent?: boolean
+          created_at?: string
+          email: string
+          id?: string
+        }
+        Update: {
+          consent?: boolean
+          created_at?: string
+          email?: string
+          id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
