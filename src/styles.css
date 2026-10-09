@@ -64,10 +64,26 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
-    background-image: radial-gradient(circle at 15% 0%, oklch(0.93 0.03 70 / 0.6), transparent 45%),
-      radial-gradient(circle at 90% 30%, oklch(0.92 0.03 30 / 0.4), transparent 40%);
-    background-attachment: fixed;
+    letter-spacing: 0;
   }
+}
+
+:root {
+  --nav-surface: oklch(0.991 0.006 84.6 / 0.88);
+  --editorial-surface: oklch(1 0 0 / 0.45);
+  --editorial-shadow: 0 14px 32px -28px oklch(0.32 0.018 55 / 0.24);
+}
+.premium-nav { background: var(--nav-surface); backdrop-filter: blur(18px); }
+.eyebrow { font-size: 10px; text-transform: uppercase; letter-spacing: 0; color: var(--muted-foreground); }
+.nav-link { position: relative; padding-block: 8px; font-size: 12px; color: var(--muted-foreground); }
+.nav-link:hover, .nav-active { color: var(--foreground); }
+.nav-active::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: var(--foreground); }
+.editorial-card { background: var(--editorial-surface); border: 1px solid var(--border); box-shadow: var(--editorial-shadow); }
+.editorial-input { width: 100%; background: transparent; border-bottom: 1px solid var(--border); padding: 14px 0; color: var(--foreground); font: inherit; border-radius: 0; }
+.editorial-input:focus-visible { outline: none; border-color: var(--foreground); box-shadow: 0 1px 0 var(--foreground); }
+.editorial-input::placeholder { color: var(--muted-foreground); }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
 
 @utility glass {

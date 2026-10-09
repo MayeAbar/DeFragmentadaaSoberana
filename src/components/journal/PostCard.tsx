@@ -1,14 +1,15 @@
 import { colorDe, formatFecha, type Post } from "@/data/journal";
 import { useCreatorMode } from "@/lib/admin";
 import { TikTokButton } from "./TikTokButton";
+import { FavoriteButton } from "@/components/community/FavoriteButton";
+import { Button } from "@/components/ui/button";
 
 export function PostCard({ post, onOpen, index }: { post: Post; onOpen: () => void; index: number }) {
   const creator = useCreatorMode();
   return (
     <article
-      onClick={onOpen}
       style={{ animationDelay: `${index * 70}ms` }}
-      className={`card-enter group flex ${post.esFragmentoLibro ? "book-excerpt" : "glass"} cursor-pointer flex-col rounded-2xl p-6 transition hover:-translate-y-1`}
+      className={`card-enter group flex ${post.esFragmentoLibro ? "book-excerpt" : "editorial-card"} flex-col rounded-lg p-6 transition hover:-translate-y-1 md:p-8`}
     >
       <div className="flex items-center justify-between gap-2">
         {post.esFragmentoLibro ? (
@@ -21,7 +22,8 @@ export function PostCard({ post, onOpen, index }: { post: Post; onOpen: () => vo
       <h3 className="mt-4 font-serif text-2xl italic leading-snug group-hover:text-accent">{post.titulo}</h3>
       <p className="mt-3 line-clamp-3 text-sm leading-7 text-muted-foreground">{post.contenido}</p>
       <div className="mt-auto flex items-center justify-between gap-3 pt-6">
-        <span className="text-xs text-muted-foreground">Leer entrada →</span>
+         <Button variant="link" onClick={onOpen} className="h-auto p-0 text-xs text-foreground">Leer entrada →</Button>
+         <FavoriteButton id={post.id} />
         {creator && <TikTokButton post={post} />}
       </div>
     </article>
