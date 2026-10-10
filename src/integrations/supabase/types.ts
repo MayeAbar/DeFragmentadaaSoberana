@@ -44,6 +44,77 @@ export type Database = {
         }
         Relationships: []
       }
+      journal_posts: {
+        Row: {
+          author_id: string
+          categoria: string
+          contenido: string
+          created_at: string
+          fecha: string
+          id: string
+          titulo: string
+        }
+        Insert: {
+          author_id?: string
+          categoria: string
+          contenido: string
+          created_at?: string
+          fecha?: string
+          id?: string
+          titulo: string
+        }
+        Update: {
+          author_id?: string
+          categoria?: string
+          contenido?: string
+          created_at?: string
+          fecha?: string
+          id?: string
+          titulo?: string
+        }
+        Relationships: []
+      }
+      journal_scripts: {
+        Row: {
+          guion: string
+          post_id: string
+        }
+        Insert: {
+          guion: string
+          post_id: string
+        }
+        Update: {
+          guion?: string
+          post_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "journal_scripts_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: true
+            referencedRelation: "journal_posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
       voice_subscribers: {
         Row: {
           consent: boolean
@@ -70,10 +141,16 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -200,6 +277,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user"],
+    },
   },
 } as const
