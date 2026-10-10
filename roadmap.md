@@ -1,9 +1,9 @@
 # Plataforma editorial de comunidad
 
-- [ ] Adaptar la paleta a carbón, oro Kintsugi y lino.
-- [ ] Poblar Acerca de Mí con el manifiesto Kintsugi y el título solicitado.
-- [ ] Activar Buzón de Soberanía con email y envío anónimo.
-- [ ] Verificar ambos enlaces sin recarga y las nuevas reglas del formulario.
+- [x] Adaptar la paleta a carbón, oro Kintsugi y lino.
+- [x] Poblar Acerca de Mí con un borrador de manifiesto Kintsugi y el título solicitado.
+- [x] Activar Buzón de Soberanía con email y envío anónimo.
+- [x] Verificar ambos enlaces sin recarga y las nuevas reglas del formulario.
 
 - [x] Navegación fija y páginas Diario, Acerca de Mí, El Libro y Hablemos.
 - [x] Favoritos guardados en el navegador y vista exclusiva.
