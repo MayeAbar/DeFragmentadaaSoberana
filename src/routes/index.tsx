@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { CATEGORIAS, entradasDiario, type Categoria, type Post } from "@/data/journal";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { publishedPostsQuery } from "@/lib/posts.functions";
+import { CATEGORIAS, JOURNAL, entradasDiario, type Categoria, type Post } from "@/data/journal";
 import { Button } from "@/components/ui/button";
 import { SovereigntyDashboard } from "@/components/journal/SovereigntyDashboard";
 import { PostCard } from "@/components/journal/PostCard";
@@ -17,6 +19,7 @@ export const Route = createFileRoute("/")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
+  loader: ({ context }) => context.queryClient.ensureQueryData(publishedPostsQuery),
   component: Index,
 });
 
@@ -25,7 +28,8 @@ type Pestana = Categoria | "Todas";
 function Index() {
   const [active, setActive] = useState<Pestana>("Todas");
   const [open, setOpen] = useState<Post | null>(null);
-  const list = entradasDiario(active);
+  const { data: publicados } = useSuspenseQuery(publishedPostsQuery);
+  const list = entradasDiario(active, [...publicados, ...JOURNAL]);
 
   return (
     <main className="mx-auto max-w-6xl px-6 py-14">
@@ -36,7 +40,7 @@ function Index() {
         <span className="mx-auto mt-8 block h-px w-16 bg-border"/>
       </header>
 
-      <SovereigntyDashboard />
+      <SovereigntyDashboard publicados={publicados} />
 
       <nav aria-label="Pilares del diario" className="mt-12 flex flex-wrap justify-center gap-x-2 gap-y-2 border-y border-border py-4">
         {(["Todas", ...CATEGORIAS.map((c) => c.id)] as const).map((c) => (
