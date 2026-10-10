@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { CATEGORIAS, JOURNAL, entradasDiario, fragmentosLibro, ultimasMetricas, type Post } from "@/data/journal";
+import { CATEGORIAS, JOURNAL, entradasDiario, fragmentosLibro, rachaEditorial, SOBERANIA, type Post } from "@/data/journal";
 
 describe("Reglas del diario y Centro de Soberanía", () => {
   it("clasifica Síndrome del Casi como diario normal en Mentalidad y Espiritualidad", () => {
@@ -38,17 +38,25 @@ describe("Reglas del diario y Centro de Soberanía", () => {
     expect(entradasDiario("Todas", [normal, reciente]).map((p) => p.id)).toEqual(["reciente", "diario"]);
   });
 
-  it("mantiene +3,2% semanal en soberanía financiera", () => {
-    expect(ultimasMetricas().trading).toBe("+3,2% semanal");
+  it("racha activa suma días consecutivos", () => {
+    expect(rachaEditorial(["2026-10-08", "2026-10-09", "2026-10-10"], "2026-10-10")).toEqual({ dias: 3, estado: "activa" });
   });
 
-  it("mantiene 14 días de racha y 24% de grasa en soberanía del cuerpo", () => {
-    expect(ultimasMetricas().rachaGym).toBe(14);
-    expect(ultimasMetricas().grasa).toBe("24%");
+  it("1 o 2 días sin publicar congelan la racha en Respiro Consciente", () => {
+    expect(rachaEditorial(["2026-10-07", "2026-10-08"], "2026-10-10")).toEqual({ dias: 2, estado: "respiro" });
+    expect(rachaEditorial(["2026-10-07", "2026-10-08"], "2026-10-11")).toEqual({ dias: 2, estado: "respiro" });
   });
 
-  it("no publica métricas de capítulos ni toma métricas del libro", () => {
-    expect(Object.keys(ultimasMetricas()).sort()).toEqual(["grasa", "rachaGym", "trading"]);
-    expect(ultimasMetricas([{ ...fragmento, metricasRef: { rachaGym: 99, grasa: "90%", trading: "+99%" } }])).toEqual({});
+  it("publicar tras 2 días de pausa reactiva y suma sobre la racha congelada", () => {
+    expect(rachaEditorial(["2026-10-07", "2026-10-08", "2026-10-11"], "2026-10-11")).toEqual({ dias: 3, estado: "activa" });
+  });
+
+  it("más de 3 días sin publicar devuelve la racha a 0", () => {
+    expect(rachaEditorial(["2026-10-07", "2026-10-08"], "2026-10-12").dias).toBe(0);
+    expect(rachaEditorial(["2026-10-01", "2026-10-05", "2026-10-06"], "2026-10-06").dias).toBe(2);
+  });
+
+  it("no queda ninguna métrica de porcentaje en el panel", () => {
+    expect(JSON.stringify(SOBERANIA)).not.toContain("%");
   });
 });

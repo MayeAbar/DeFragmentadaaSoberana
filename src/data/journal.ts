@@ -1,7 +1,5 @@
 export type Categoria = "Financiero" | "Cuerpo" | "Maternidad" | "Mujer" | "Mentalidad y Espiritualidad";
 
-export type MetricasRef = { grasa?: string; rachaGym?: number; trading?: string };
-
 export type Post = {
   id: string;
   fecha: string; // ISO yyyy-mm-dd; se muestra en español con formatFecha
@@ -10,7 +8,6 @@ export type Post = {
   contenido: string;
   tiktokUrl?: string;
   guion?: string; // guion TikTok escrito a mano; si existe se copia tal cual
-  metricasRef?: MetricasRef;
   esFragmentoLibro: boolean; // true = extracto reservado a la sección independiente El Libro
 };
 
@@ -55,12 +52,6 @@ Al sentarme a escribir en mi diario digital, descubrí esta verdad incómoda: el
 [LLAMADO A LA ACCIÓN]
 Escribo esto con el corazón acelerado por la ansiedad y con una fuerte sensación corporal de ir perdiendo, pero también con una convicción inquebrantable: esto es solo aprendizaje y evolución. Reconocer de frente dónde estás rota es el primer paso para reconstruirte. Si tú también estás atrapada en el "casi", sígueme. Vamos a reclamar nuestra soberanía, página a página.`,
   },
-  { id: "6", fecha: "2026-10-05", esFragmentoLibro: false, categoria: "Financiero", titulo: "Lancé otra web con Lovable en una tarde", contenido: "En Abar Digital entregamos hoy una web completa para una clienta, construida en horas con Lovable. Y en la noche, avancé dos capítulos del libro en edición. Ser soberana digital es crear con tus propias manos.", metricasRef: { rachaGym: 14, grasa: "24%", trading: "+3,2% semanal" } },
-  { id: "5", fecha: "2026-10-04", esFragmentoLibro: false, categoria: "Mujer", titulo: "Dejé de pedir permiso para brillar", contenido: "Durante años me hice pequeña para no incomodar. Hoy me miré al espejo y me dije: mereces ocupar espacio. La autoestima no es arrogancia, es dejar de abandonarte a ti misma." },
-  { id: "4", fecha: "2026-10-03", esFragmentoLibro: false, categoria: "Maternidad", titulo: "Ropa sucia, risas limpias", contenido: "La casa era un desastre: juguetes, platos, una montaña de ropa. Y aun así, mi hijo me pidió bailar en la cocina. Bailamos. El orden puede esperar; estos momentos no vuelven." },
-  { id: "3", fecha: "2026-10-02", esFragmentoLibro: false, categoria: "Financiero", titulo: "Perdí y no me vengué del mercado", contenido: "Dos operaciones en rojo seguidas. Antes habría duplicado la apuesta para recuperar. Hoy cerré la plataforma. Mi regla: máximo dos pérdidas por día. Proteger el capital es proteger mi paz mental.", metricasRef: { trading: "-1,1% hoy · regla respetada" } },
-  { id: "2", fecha: "2026-10-01", esFragmentoLibro: false, categoria: "Cuerpo", titulo: "El día que no quería ir al gym", contenido: "La motivación no apareció. Fui igual. Sentadilla pesada, cuatro series, y en la tercera entendí que la disciplina es amor propio con zapatillas. La hipertrofia no se construye con ganas, se construye con constancia.", metricasRef: { rachaGym: 10 } },
-  { id: "1", fecha: "2026-09-30", esFragmentoLibro: false, categoria: "Cuerpo", titulo: "No era hambre, era ansiedad", contenido: "Hoy abrí el refrigerador tres veces sin hambre real. Me detuve, respiré y anoté lo que sentía. Descubrí que no buscaba comida, buscaba calma. Preparé un bowl con proteína, avena y frutos rojos, y comí sentada, sin pantalla. Pequeños actos de presencia que cambian todo.", metricasRef: { grasa: "25%" } },
 ];
 
 export function entradasDiario(categoria: Categoria | "Todas" = "Todas", posts: readonly Post[] = JOURNAL): Post[] {
@@ -73,13 +64,29 @@ export function fragmentosLibro(posts: readonly Post[] = JOURNAL): Post[] {
   return posts.filter((post) => post.esFragmentoLibro).sort((a, b) => b.fecha.localeCompare(a.fecha));
 }
 
-export function ultimasMetricas(posts: readonly Post[] = JOURNAL): MetricasRef {
-  const out: MetricasRef = {};
-  for (const post of entradasDiario("Todas", posts).reverse()) {
-    const m = post.metricasRef;
-    if (m?.grasa !== undefined) out.grasa = m.grasa;
-    if (m?.rachaGym !== undefined) out.rachaGym = m.rachaGym;
-    if (m?.trading !== undefined) out.trading = m.trading;
-  }
-  return out;
+/** Valores que la autora actualiza a mano: lenguaje humano, sin porcentajes. */
+export const SOBERANIA = {
+  cuerpo: { valor: 14, etiqueta: "Días de Enfoque Físico" },
+  financiera: { estado: "Gestión de Riesgo: Innegociable", detalle: "Paz Financiera: Bajo Plan" },
+};
+
+export type EstadoRacha = "activa" | "respiro" | "sin-racha";
+
+const diaUTC = (iso: string) => Date.UTC(+iso.slice(0, 4), +iso.slice(5, 7) - 1, +iso.slice(8, 10)) / 86400000;
+
+/**
+ * Racha Editorial con días de gracia: se pueden saltar 1 o 2 días (la racha se congela
+ * en "respiro"); con más de 3 días sin publicar (72 h) vuelve a 0.
+ * Cuenta los días distintos con publicación dentro de la cadena vigente.
+ */
+export function rachaEditorial(fechas: readonly string[], hoy: string): { dias: number; estado: EstadoRacha } {
+  const dias = [...new Set(fechas.map((f) => f.slice(0, 10)))].map(diaUTC).sort((a, b) => b - a);
+  const h = diaUTC(hoy);
+  const recientes = dias.filter((d) => d <= h);
+  if (!recientes.length || h - recientes[0] > 3) return { dias: 0, estado: "sin-racha" };
+  let n = 1;
+  for (let i = 1; i < recientes.length && recientes[i - 1] - recientes[i] <= 3; i++) n++;
+  return { dias: n, estado: h - recientes[0] <= 1 ? "activa" : "respiro" };
 }
+
+export const hoySantiago = () => new Intl.DateTimeFormat("en-CA", { timeZone: "America/Santiago" }).format(new Date());

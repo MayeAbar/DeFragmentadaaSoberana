@@ -6,7 +6,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { contactSchema, pageHead } from '@/lib/community';
 
 export const Route = createFileRoute('/hablemos')({
-  head: () => pageHead('Buzón de Soberanía', 'Deposita aquí tus grietas: comparte tus preguntas, opiniones o desahogos con María y elige si autorizas una respuesta pública.'),
+  head: () => pageHead('Buzón de Soberanía', 'Deposita aquí tus grietas: comparte tus preguntas, opiniones o desahogos con Patricia y elige si autorizas una respuesta pública.'),
   component: ContactPage,
 });
 
@@ -52,7 +52,7 @@ function ContactPage() {
             <label className="mb-5 flex items-center gap-3 text-sm"><input type="checkbox" checked={anonymous} onChange={e => { setAnonymous(e.target.checked); if (e.target.checked && publicResponse === 'Sí') setPublicResponse('Anónimo'); }} className="accent-primary" />Enviar de forma Anónima</label>
             {!anonymous && <><label htmlFor="contact-name" className="text-xs text-muted-foreground">Nombre</label><input id="contact-name" autoComplete="name" required maxLength={100} value={name} onChange={e => setName(e.target.value)} className="editorial-input" placeholder="¿Cómo te llamas?" /></>}
           </div>
-          <div><label htmlFor="contact-email" className="text-xs text-muted-foreground">Email</label><input id="contact-email" type="email" autoComplete="email" required maxLength={254} value={email} onChange={e => setEmail(e.target.value)} className="editorial-input" placeholder="hola@tucorreo.com" /><p className="mt-3 text-xs leading-5 text-muted-foreground">Tu email es privado y nunca se incluirá en una respuesta pública. El envío anónimo oculta tu nombre, no tu email para María.</p></div>
+          <div><label htmlFor="contact-email" className="text-xs text-muted-foreground">Email</label><input id="contact-email" type="email" autoComplete="email" required maxLength={254} value={email} onChange={e => setEmail(e.target.value)} className="editorial-input" placeholder="hola@tucorreo.com" /><p className="mt-3 text-xs leading-5 text-muted-foreground">Tu email es privado y nunca se incluirá en una respuesta pública. El envío anónimo oculta tu nombre, no tu email para Patricia.</p></div>
           <div><label htmlFor="contact-message" className="text-xs text-muted-foreground">Mensaje</label><textarea id="contact-message" required maxLength={5000} rows={7} value={message} onChange={e => setMessage(e.target.value)} className="editorial-input resize-y" placeholder="Aquí hay espacio para lo que sientes…" /></div>
           <div>
             <label htmlFor="public-response" className="text-sm leading-6">¿Quieres que responda esto de forma pública en mi diario/TikTok?</label>
@@ -61,7 +61,7 @@ function ContactPage() {
             </select>
             <p className="mt-3 text-xs leading-5 text-muted-foreground">{publicResponse === 'Sí' ? 'Autorizas que tu mensaje y nombre se incluyan en una respuesta pública.' : publicResponse === 'Anónimo' ? 'Autorizas una respuesta pública sin mostrar tu nombre.' : 'Tu mensaje no se publicará.'}</p>
           </div>
-          <p className="text-xs leading-5 text-muted-foreground">Al enviar, aceptas que María reciba tu mensaje y email para leer y responder tu reflexión. No se publicará automáticamente.</p>
+          <p className="text-xs leading-5 text-muted-foreground">Al enviar, aceptas que Patricia reciba tu mensaje y email para leer y responder tu reflexión. No se publicará automáticamente.</p>
           {error && <p role="alert" className="text-sm">{error}</p>}
           <div className="flex justify-end"><Button type="submit" disabled={state === 'sending'} className="kintsugi-submit h-12 rounded-none px-7">{state === 'sending' ? 'Enviando…' : 'Enviar mensaje'}<ArrowRight strokeWidth={1.2} /></Button></div>
         </form>

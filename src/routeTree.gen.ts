@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AcercaDeMiRouteImport } from './routes/acerca-de-mi'
+import { Route as AdminPanelRouteImport } from './routes/admin-panel'
 import { Route as ElLibroRouteImport } from './routes/el-libro'
 import { Route as FavoritosRouteImport } from './routes/favoritos'
 import { Route as HablemosRouteImport } from './routes/hablemos'
@@ -23,6 +24,11 @@ const IndexRoute = IndexRouteImport.update({
 const AcercaDeMiRoute = AcercaDeMiRouteImport.update({
   id: '/acerca-de-mi',
   path: '/acerca-de-mi',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminPanelRoute = AdminPanelRouteImport.update({
+  id: '/admin-panel',
+  path: '/admin-panel',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ElLibroRoute = ElLibroRouteImport.update({
@@ -44,6 +50,7 @@ const HablemosRoute = HablemosRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/acerca-de-mi': typeof AcercaDeMiRoute
+  '/admin-panel': typeof AdminPanelRoute
   '/el-libro': typeof ElLibroRoute
   '/favoritos': typeof FavoritosRoute
   '/hablemos': typeof HablemosRoute
@@ -51,6 +58,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/acerca-de-mi': typeof AcercaDeMiRoute
+  '/admin-panel': typeof AdminPanelRoute
   '/el-libro': typeof ElLibroRoute
   '/favoritos': typeof FavoritosRoute
   '/hablemos': typeof HablemosRoute
@@ -59,19 +67,33 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/acerca-de-mi': typeof AcercaDeMiRoute
+  '/admin-panel': typeof AdminPanelRoute
   '/el-libro': typeof ElLibroRoute
   '/favoritos': typeof FavoritosRoute
   '/hablemos': typeof HablemosRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/acerca-de-mi' | '/el-libro' | '/favoritos' | '/hablemos'
+  fullPaths:
+    | '/'
+    | '/acerca-de-mi'
+    | '/admin-panel'
+    | '/el-libro'
+    | '/favoritos'
+    | '/hablemos'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/acerca-de-mi' | '/el-libro' | '/favoritos' | '/hablemos'
+  to:
+    | '/'
+    | '/acerca-de-mi'
+    | '/admin-panel'
+    | '/el-libro'
+    | '/favoritos'
+    | '/hablemos'
   id:
     | '__root__'
     | '/'
     | '/acerca-de-mi'
+    | '/admin-panel'
     | '/el-libro'
     | '/favoritos'
     | '/hablemos'
@@ -80,6 +102,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AcercaDeMiRoute: typeof AcercaDeMiRoute
+  AdminPanelRoute: typeof AdminPanelRoute
   ElLibroRoute: typeof ElLibroRoute
   FavoritosRoute: typeof FavoritosRoute
   HablemosRoute: typeof HablemosRoute
@@ -99,6 +122,13 @@ declare module '@tanstack/react-router' {
       path: '/acerca-de-mi'
       fullPath: '/acerca-de-mi'
       preLoaderRoute: typeof AcercaDeMiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin-panel': {
+      id: '/admin-panel'
+      path: '/admin-panel'
+      fullPath: '/admin-panel'
+      preLoaderRoute: typeof AdminPanelRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/el-libro': {
@@ -128,6 +158,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AcercaDeMiRoute: AcercaDeMiRoute,
+  AdminPanelRoute: AdminPanelRoute,
   ElLibroRoute: ElLibroRoute,
   FavoritosRoute: FavoritosRoute,
   HablemosRoute: HablemosRoute,
