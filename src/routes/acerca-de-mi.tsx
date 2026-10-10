@@ -11,7 +11,7 @@ function AboutPage() {
   return (
     <main className="mx-auto max-w-6xl px-6 py-14">
       <header className="mx-auto max-w-3xl text-center">
-        <p className="eyebrow">Acerca de Mí · María Barros Coronado</p>
+        <p className="eyebrow">Acerca de Mí · Patricia Abar</p>
         <h1 className="mt-5 font-serif text-5xl italic leading-tight md:text-6xl">Dejé de pedir permiso para ocupar espacio</h1>
         <p className="mt-5 font-serif text-xl text-muted-foreground">El manifiesto de mi reconstrucción</p>
         <span className="kintsugi-rule mx-auto mt-8 block" />

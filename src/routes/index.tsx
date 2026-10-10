@@ -10,9 +10,9 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "De Fragmentada a Soberana — Diario de Vida" },
-      { name: "description", content: "El diario de María Barros Coronado: soberanía financiera, cuerpo, maternidad, mujer, mentalidad y espiritualidad." },
+      { name: "description", content: "El diario de Patricia Abar: soberanía financiera, cuerpo, maternidad, mujer, mentalidad y espiritualidad." },
       { property: "og:title", content: "De Fragmentada a Soberana — Diario de Vida" },
-      { property: "og:description", content: "Reflexiones de María Barros Coronado en cinco pilares de transformación, con el libro en un espacio independiente." },
+      { property: "og:description", content: "Reflexiones de Patricia Abar en cinco pilares de transformación, con el libro en un espacio independiente." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -30,7 +30,7 @@ function Index() {
   return (
     <main className="mx-auto max-w-6xl px-6 py-14">
       <header className="mx-auto max-w-3xl text-center">
-        <p className="eyebrow">El diario de María Barros Coronado</p>
+        <p className="eyebrow">El diario de Patricia Abar</p>
         <h1 className="mt-5 font-serif text-5xl italic leading-tight md:text-7xl">De Fragmentada<br className="hidden sm:block"/> a Soberana</h1>
         <p className="mx-auto mt-5 max-w-md text-sm leading-7 text-muted-foreground">Cinco pilares, una mujer reconstruyéndose página a página.</p>
         <span className="mx-auto mt-8 block h-px w-16 bg-border"/>
