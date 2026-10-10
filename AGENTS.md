@@ -15,4 +15,5 @@
 - Shared site chrome and favorites provider wrap the root Outlet; each major section has a distinct public route for navigation and metadata.
 - Favorites store journal IDs in browser storage with hydration-safe initialization; they never authorize private actions.
 - Community forms use insert-only RLS tables with database validation and no visitor read access, keeping messages and subscriber emails private.
+- Anonymous inbox submissions replace names with an anonymous label and disallow named publication; email remains a private reply address, with nullable storage retained for legacy compatibility.
 - Normalize TikTok links to allowlisted HTTPS player URLs; public readers show actual videos, while creator scripts and empty video placeholders remain creator-only.
